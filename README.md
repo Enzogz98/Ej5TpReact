@@ -1,6 +1,6 @@
 # Lista de Tareas App
 
-Esta es una aplicación web simple creada con React que te permite agregar tareas a una lista y eliminarlas individualmente.
+Esta es una aplicación web simple creada con React que te permite agregar tareas a una lista y eliminarlas individualmente. Las tareas son almacenadas en localStorage
 
 ## Instrucciones de Uso
 

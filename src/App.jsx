@@ -1,14 +1,19 @@
-import { useState } from 'react'
-
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  const [tasks, setTasks] = useState(storedTasks);
   const [newTask, setNewTask] = useState('');
+
+  useEffect(() => {
+    // Al cambiar las tareas, actualiza el localStorage
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddTask = () => {
     if (newTask.trim() !== '') {
-      setTasks([...tasks, newTask]);
+      setTasks((prevTasks) => [...prevTasks, newTask]);
       setNewTask('');
     }
   };
@@ -18,10 +23,9 @@ function App() {
       handleAddTask();
     }
   };
+
   const handleDeleteTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.splice(index, 1);
-    setTasks(updatedTasks);
+    setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
   };
 
   return (
@@ -39,7 +43,7 @@ function App() {
           <button onClick={handleAddTask}>Agregar</button>
         </div>
         <ul>
-        {tasks.map((task, index) => (
+          {tasks.map((task, index) => (
             <li key={index}>
               {task}
               <button onClick={() => handleDeleteTask(index)} className="deleteButton">
@@ -53,4 +57,5 @@ function App() {
   );
 }
 
-export default App
+
+export default App;
